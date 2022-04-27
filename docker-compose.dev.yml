@@ -5,24 +5,24 @@ networks:
   client:
 
 services:
-  # server:
-  #   container_name: linkumg_server
-  #   build:
-  #     context: server
-  #     dockerfile: Dockerfile.dev
-  #   volumes:
-  #     - ./server:/app
-  #   stdin_open: true
-  #   ports:
-  #     - 8080:8080
-  #   networks:
-  #     - server
+  server:
+    container_name: linkumg_server
+    build:
+      context: server
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./server:/app
+    stdin_open: true
+    ports:
+      - 8080:8080
+    networks:
+      - server
       
-  front:
+  client:
     command: "yarn start"
     container_name: linkumg_client
     build:
-      context: "./client"
+      context: client
       dockerfile: Dockerfile.dev
     environment:
       - CHOKIDAR_USEPOLLING=true
@@ -31,6 +31,6 @@ services:
     volumes:
       - ./client:/home/node/ui
       - /home/node/ui/node_modules
-    # depends_on:
-    #   - server
+    networks:
+      - client
 
